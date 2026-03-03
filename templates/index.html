@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPredict - AI Disease Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-section">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="logo-text">MediPredict</span>
+                </div>
+                <div class="header-info">
+                    <span class="badge-custom"><i class="fas fa-shield-alt"></i> AI-Powered</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container main-container">
+        <div class="row g-4">
+            <!-- Left Panel: Symptom Selection -->
+            <div class="col-lg-4">
+                <div class="card-modern">
+                    <div class="card-header-modern">
+                        <i class="fas fa-stethoscope icon-header"></i>
+                        <h5 class="mb-0">Symptom Selection</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="search-box mb-3">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="symptomSearch" class="search-input" placeholder="Search symptoms...">
+                        </div>
+                        <div id="symptomList" class="symptom-scroll">
+                            {% for symptom in symptoms %}
+                            <div class="form-check symptom-item">
+                                <input class="form-check-input" type="checkbox" value="{{ symptom }}" id="symptom_{{ loop.index }}">
+                                <label class="form-check-label" for="symptom_{{ loop.index }}">
+                                    {{ symptom.replace('_', ' ').title() }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-4">
+                            <label for="modelSelect" class="label-modern">ML Algorithm</label>
+                            <select id="modelSelect" class="select-modern">
+                                <option value="random_forest">🌲 Random Forest</option>
+                                <option value="gradient_boosting">📈 Gradient Boosting</option>
+                                <option value="svm">🎯 Support Vector Machine</option>
+                                <option value="naive_bayes">📊 Naive Bayes</option>
+                                <option value="knn">🔍 K-Nearest Neighbors</option>
+                            </select>
+                        </div>
+                        <button id="predictBtn" class="btn-primary-modern w-100 mt-4">
+                            <i class="fas fa-brain"></i> Analyze Symptoms
+                        </button>
+                        <button id="clearBtn" class="btn-secondary-modern w-100 mt-2">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        
+                        <!-- Selected Symptoms Display -->
+                        <div id="selectedSymptomsContainer" class="selected-container mt-4" style="display: none;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0"><i class="fas fa-check-circle"></i> Selected</h6>
+                                <span class="badge-count" id="symptomCount">0</span>
+                            </div>
+                            <div id="selectedSymptomsList" class="selected-symptoms"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Card -->
+                <div class="card-modern mt-4">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalPredictions">0</div>
+                                <div class="stat-label">Predictions</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-notes-medical"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalSymptoms">0</div>
+                                <div class="stat-label">Symptoms</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-disease"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalDiseases">0</div>
+                                <div class="stat-label">Diseases</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="col-lg-8">
+                <!-- Prediction Result -->
+                <div class="card-modern result-card" id="resultCard" style="display: none;">
+                    <div class="result-header">
+                        <i class="fas fa-check-circle result-icon"></i>
+                        <h4 class="mb-0">Diagnosis Result</h4>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="primary-result">
+                            <div class="result-label">Predicted Condition</div>
+                            <div class="result-disease" id="predictedDisease"></div>
+                            <div class="result-meta">
+                                <span><i class="fas fa-percentage"></i> Confidence: <strong id="confidence"></strong></span>
+                                <span><i class="fas fa-microchip"></i> Model: <strong id="modelUsed"></strong></span>
+                            </div>
+                        </div>
+                        <div class="divider-modern"></div>
+                        <h6 class="section-title">Top Predictions</h6>
+                        <div id="topPredictions"></div>
+                    </div>
+                </div>
+
+                <!-- Model Comparison Chart -->
+                <div class="card-modern">
+                    <div class="card-header-modern">
+                        <i class="fas fa-chart-bar icon-header"></i>
+                        <h5 class="mb-0">Performance Analytics</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <canvas id="modelComparisonChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Accuracy Metrics -->
+                <div class="card-modern mt-4">
+                    <div class="card-header-modern">
+                        <i class="fas fa-table icon-header"></i>
+                        <h5 class="mb-0">Model Metrics</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="table-responsive">
+                            <table class="table-modern" id="metricsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Accuracy</th>
+                                        <th>CV Mean</th>
+                                        <th>CV Std</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction History -->
+                <div class="card-modern mt-4">
+                    <div class="card-header-modern">
+                        <i class="fas fa-history icon-header"></i>
+                        <h5 class="mb-0">Recent Activity</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div id="historyList" class="history-scroll"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

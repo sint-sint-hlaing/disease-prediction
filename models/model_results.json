@@ -1,0 +1,552 @@
+{
+    "Random Forest": {
+        "accuracy": 0.946078431372549,
+        "cv_mean": 0.9350516235223703,
+        "cv_std": 0.015796787285752782,
+        "classification_report": {
+            "Allergy": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Arthritis": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 21.0
+            },
+            "Common Cold": {
+                "precision": 0.9,
+                "recall": 0.9,
+                "f1-score": 0.9,
+                "support": 10.0
+            },
+            "Dengue": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1-score": 0.8888888888888888,
+                "support": 10.0
+            },
+            "Fungal infection": {
+                "precision": 0.8823529411764706,
+                "recall": 0.967741935483871,
+                "f1-score": 0.9230769230769231,
+                "support": 31.0
+            },
+            "GERD": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Gastroenteritis": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Hepatitis": {
+                "precision": 0.9090909090909091,
+                "recall": 1.0,
+                "f1-score": 0.9523809523809523,
+                "support": 10.0
+            },
+            "Hypoglycemia": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Malaria": {
+                "precision": 0.95,
+                "recall": 0.9047619047619048,
+                "f1-score": 0.926829268292683,
+                "support": 21.0
+            },
+            "Migraine": {
+                "precision": 0.9090909090909091,
+                "recall": 1.0,
+                "f1-score": 0.9523809523809523,
+                "support": 10.0
+            },
+            "Peptic ulcer": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Pneumonia": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1-score": 0.8888888888888888,
+                "support": 10.0
+            },
+            "Tuberculosis": {
+                "precision": 0.875,
+                "recall": 1.0,
+                "f1-score": 0.9333333333333333,
+                "support": 21.0
+            },
+            "Typhoid": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "accuracy": 0.946078431372549,
+            "macro avg": {
+                "precision": 0.9617023172905524,
+                "recall": 0.9381669226830519,
+                "f1-score": 0.9471922980267012,
+                "support": 204.0
+            },
+            "weighted avg": {
+                "precision": 0.9502929380308273,
+                "recall": 0.946078431372549,
+                "f1-score": 0.9457120034632681,
+                "support": 204.0
+            }
+        }
+    },
+    "Gradient Boosting": {
+        "accuracy": 0.9313725490196079,
+        "cv_mean": 0.9081026485111477,
+        "cv_std": 0.010834419028442325,
+        "classification_report": {
+            "Allergy": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Arthritis": {
+                "precision": 0.9523809523809523,
+                "recall": 0.9523809523809523,
+                "f1-score": 0.9523809523809523,
+                "support": 21.0
+            },
+            "Common Cold": {
+                "precision": 0.9,
+                "recall": 0.9,
+                "f1-score": 0.9,
+                "support": 10.0
+            },
+            "Dengue": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1-score": 0.8888888888888888,
+                "support": 10.0
+            },
+            "Fungal infection": {
+                "precision": 0.8823529411764706,
+                "recall": 0.967741935483871,
+                "f1-score": 0.9230769230769231,
+                "support": 31.0
+            },
+            "GERD": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Gastroenteritis": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Hepatitis": {
+                "precision": 0.8888888888888888,
+                "recall": 0.8,
+                "f1-score": 0.8421052631578947,
+                "support": 10.0
+            },
+            "Hypoglycemia": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Malaria": {
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1-score": 0.85,
+                "support": 21.0
+            },
+            "Migraine": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Peptic ulcer": {
+                "precision": 0.9090909090909091,
+                "recall": 1.0,
+                "f1-score": 0.9523809523809523,
+                "support": 10.0
+            },
+            "Pneumonia": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1-score": 0.8888888888888888,
+                "support": 10.0
+            },
+            "Tuberculosis": {
+                "precision": 0.875,
+                "recall": 1.0,
+                "f1-score": 0.9333333333333333,
+                "support": 21.0
+            },
+            "Typhoid": {
+                "precision": 0.9,
+                "recall": 0.9,
+                "f1-score": 0.9,
+                "support": 10.0
+            },
+            "accuracy": 0.9313725490196079,
+            "macro avg": {
+                "precision": 0.9468300355761656,
+                "recall": 0.9286431131592424,
+                "f1-score": 0.9354036801405223,
+                "support": 204.0
+            },
+            "weighted avg": {
+                "precision": 0.9338098668650937,
+                "recall": 0.9313725490196079,
+                "f1-score": 0.9303334536693669,
+                "support": 204.0
+            }
+        }
+    },
+    "SVM": {
+        "accuracy": 0.9509803921568627,
+        "cv_mean": 0.939982043992219,
+        "cv_std": 0.01779960815871162,
+        "classification_report": {
+            "Allergy": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Arthritis": {
+                "precision": 1.0,
+                "recall": 0.9523809523809523,
+                "f1-score": 0.975609756097561,
+                "support": 21.0
+            },
+            "Common Cold": {
+                "precision": 0.9090909090909091,
+                "recall": 1.0,
+                "f1-score": 0.9523809523809523,
+                "support": 10.0
+            },
+            "Dengue": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1-score": 0.8888888888888888,
+                "support": 10.0
+            },
+            "Fungal infection": {
+                "precision": 0.8823529411764706,
+                "recall": 0.967741935483871,
+                "f1-score": 0.9230769230769231,
+                "support": 31.0
+            },
+            "GERD": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Gastroenteritis": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Hepatitis": {
+                "precision": 0.8888888888888888,
+                "recall": 0.8,
+                "f1-score": 0.8421052631578947,
+                "support": 10.0
+            },
+            "Hypoglycemia": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Malaria": {
+                "precision": 0.95,
+                "recall": 0.9047619047619048,
+                "f1-score": 0.926829268292683,
+                "support": 21.0
+            },
+            "Migraine": {
+                "precision": 0.9090909090909091,
+                "recall": 1.0,
+                "f1-score": 0.9523809523809523,
+                "support": 10.0
+            },
+            "Peptic ulcer": {
+                "precision": 0.9090909090909091,
+                "recall": 1.0,
+                "f1-score": 0.9523809523809523,
+                "support": 10.0
+            },
+            "Pneumonia": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Tuberculosis": {
+                "precision": 0.9545454545454546,
+                "recall": 1.0,
+                "f1-score": 0.9767441860465116,
+                "support": 21.0
+            },
+            "Typhoid": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "accuracy": 0.9509803921568627,
+            "macro avg": {
+                "precision": 0.960204000792236,
+                "recall": 0.9483256528417818,
+                "f1-score": 0.9523422656539057,
+                "support": 204.0
+            },
+            "weighted avg": {
+                "precision": 0.9534804504095163,
+                "recall": 0.9509803921568627,
+                "f1-score": 0.9505243654289484,
+                "support": 204.0
+            }
+        }
+    },
+    "Naive Bayes": {
+        "accuracy": 0.8284313725490197,
+        "cv_mean": 0.6436705072572197,
+        "cv_std": 0.12322532380184079,
+        "classification_report": {
+            "Allergy": {
+                "precision": 0.8888888888888888,
+                "recall": 0.8,
+                "f1-score": 0.8421052631578947,
+                "support": 10.0
+            },
+            "Arthritis": {
+                "precision": 1.0,
+                "recall": 0.9047619047619048,
+                "f1-score": 0.95,
+                "support": 21.0
+            },
+            "Common Cold": {
+                "precision": 0.7692307692307693,
+                "recall": 1.0,
+                "f1-score": 0.8695652173913043,
+                "support": 10.0
+            },
+            "Dengue": {
+                "precision": 1.0,
+                "recall": 0.6,
+                "f1-score": 0.75,
+                "support": 10.0
+            },
+            "Fungal infection": {
+                "precision": 0.8214285714285714,
+                "recall": 0.7419354838709677,
+                "f1-score": 0.7796610169491526,
+                "support": 31.0
+            },
+            "GERD": {
+                "precision": 0.6428571428571429,
+                "recall": 0.9,
+                "f1-score": 0.75,
+                "support": 10.0
+            },
+            "Gastroenteritis": {
+                "precision": 0.8571428571428571,
+                "recall": 0.6,
+                "f1-score": 0.7058823529411765,
+                "support": 10.0
+            },
+            "Hepatitis": {
+                "precision": 0.7272727272727273,
+                "recall": 0.8,
+                "f1-score": 0.7619047619047619,
+                "support": 10.0
+            },
+            "Hypoglycemia": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1-score": 0.8888888888888888,
+                "support": 10.0
+            },
+            "Malaria": {
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1-score": 0.85,
+                "support": 21.0
+            },
+            "Migraine": {
+                "precision": 0.7272727272727273,
+                "recall": 0.8,
+                "f1-score": 0.7619047619047619,
+                "support": 10.0
+            },
+            "Peptic ulcer": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Pneumonia": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Tuberculosis": {
+                "precision": 0.9523809523809523,
+                "recall": 0.9523809523809523,
+                "f1-score": 0.9523809523809523,
+                "support": 21.0
+            },
+            "Typhoid": {
+                "precision": 0.45,
+                "recall": 0.9,
+                "f1-score": 0.6,
+                "support": 10.0
+            },
+            "accuracy": 0.8284313725490197,
+            "macro avg": {
+                "precision": 0.8487474319053266,
+                "recall": 0.8272401433691757,
+                "f1-score": 0.8238020038416104,
+                "support": 204.0
+            },
+            "weighted avg": {
+                "precision": 0.8621588751232714,
+                "recall": 0.8284313725490197,
+                "f1-score": 0.8344086882762952,
+                "support": 204.0
+            }
+        }
+    },
+    "KNN": {
+        "accuracy": 0.9656862745098039,
+        "cv_mean": 0.9448376477629807,
+        "cv_std": 0.01943385325178874,
+        "classification_report": {
+            "Allergy": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Arthritis": {
+                "precision": 1.0,
+                "recall": 0.9523809523809523,
+                "f1-score": 0.975609756097561,
+                "support": 21.0
+            },
+            "Common Cold": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Dengue": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Fungal infection": {
+                "precision": 0.9090909090909091,
+                "recall": 0.967741935483871,
+                "f1-score": 0.9375,
+                "support": 31.0
+            },
+            "GERD": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Gastroenteritis": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Hepatitis": {
+                "precision": 0.9,
+                "recall": 0.9,
+                "f1-score": 0.9,
+                "support": 10.0
+            },
+            "Hypoglycemia": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Malaria": {
+                "precision": 0.9130434782608695,
+                "recall": 1.0,
+                "f1-score": 0.9545454545454546,
+                "support": 21.0
+            },
+            "Migraine": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Peptic ulcer": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 10.0
+            },
+            "Pneumonia": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "Tuberculosis": {
+                "precision": 0.9545454545454546,
+                "recall": 1.0,
+                "f1-score": 0.9767441860465116,
+                "support": 21.0
+            },
+            "Typhoid": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1-score": 0.9473684210526315,
+                "support": 10.0
+            },
+            "accuracy": 0.9656862745098039,
+            "macro avg": {
+                "precision": 0.9784453227931489,
+                "recall": 0.961341525857655,
+                "f1-score": 0.9689248720600037,
+                "support": 204.0
+            },
+            "weighted avg": {
+                "precision": 0.96765287142525,
+                "recall": 0.9656862745098039,
+                "f1-score": 0.9656966871205162,
+                "support": 204.0
+            }
+        }
+    }
+}
