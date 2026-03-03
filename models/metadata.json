@@ -95,6 +95,14 @@
         "all_features": 35,
         "selected_features": 35,
         "accuracy_all": 0.946078431372549,
-        "accuracy_selected": 0.946078431372549
+        "accuracy_selected": 0.9117647058823529,
+        "rf_default_accuracy": 0.946078431372549,
+        "rf_tuned_accuracy": 0.9117647058823529,
+        "best_params": {
+            "max_depth": 10,
+            "min_samples_leaf": 1,
+            "min_samples_split": 5,
+            "n_estimators": 200
+        }
     }
 }

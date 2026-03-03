@@ -1,8 +1,8 @@
 {
     "Random Forest": {
-        "accuracy": 0.946078431372549,
-        "cv_mean": 0.9350516235223703,
-        "cv_std": 0.015796787285752782,
+        "accuracy": 0.9117647058823529,
+        "cv_mean": 0.931378123597187,
+        "cv_std": 0.01051470386092409,
         "classification_report": {
             "Allergy": {
                 "precision": 1.0,
@@ -11,9 +11,9 @@
                 "support": 10.0
             },
             "Arthritis": {
-                "precision": 1.0,
+                "precision": 0.9545454545454546,
                 "recall": 1.0,
-                "f1-score": 1.0,
+                "f1-score": 0.9767441860465117,
                 "support": 21.0
             },
             "Common Cold": {
@@ -29,45 +29,45 @@
                 "support": 10.0
             },
             "Fungal infection": {
-                "precision": 0.8823529411764706,
+                "precision": 0.8571428571428571,
                 "recall": 0.967741935483871,
-                "f1-score": 0.923076923076923,
+                "f1-score": 0.909090909090909,
                 "support": 31.0
             },
             "GERD": {
                 "precision": 1.0,
-                "recall": 0.9,
-                "f1-score": 0.9473684210526316,
+                "recall": 0.8,
+                "f1-score": 0.888888888888889,
                 "support": 10.0
             },
             "Gastroenteritis": {
-                "precision": 1.0,
+                "precision": 0.9090909090909091,
                 "recall": 1.0,
-                "f1-score": 1.0,
+                "f1-score": 0.9523809523809523,
                 "support": 10.0
             },
             "Hepatitis": {
-                "precision": 0.9090909090909091,
-                "recall": 1.0,
-                "f1-score": 0.9523809523809523,
+                "precision": 0.8888888888888888,
+                "recall": 0.8,
+                "f1-score": 0.8421052631578948,
                 "support": 10.0
             },
             "Hypoglycemia": {
-                "precision": 1.0,
-                "recall": 0.9,
-                "f1-score": 0.9473684210526316,
+                "precision": 0.8888888888888888,
+                "recall": 0.8,
+                "f1-score": 0.8421052631578948,
                 "support": 10.0
             },
             "Malaria": {
-                "precision": 0.95,
+                "precision": 0.9047619047619048,
                 "recall": 0.9047619047619048,
-                "f1-score": 0.9268292682926829,
+                "f1-score": 0.9047619047619048,
                 "support": 21.0
             },
             "Migraine": {
-                "precision": 0.9090909090909091,
-                "recall": 1.0,
-                "f1-score": 0.9523809523809523,
+                "precision": 0.8888888888888888,
+                "recall": 0.8,
+                "f1-score": 0.8421052631578948,
                 "support": 10.0
             },
             "Peptic ulcer": {
@@ -83,9 +83,9 @@
                 "support": 10.0
             },
             "Tuberculosis": {
-                "precision": 0.875,
-                "recall": 1.0,
-                "f1-score": 0.9333333333333333,
+                "precision": 0.8,
+                "recall": 0.9523809523809523,
+                "f1-score": 0.8695652173913043,
                 "support": 21.0
             },
             "Typhoid": {
@@ -94,17 +94,17 @@
                 "f1-score": 0.9473684210526316,
                 "support": 10.0
             },
-            "accuracy": 0.946078431372549,
+            "accuracy": 0.9117647058823529,
             "macro avg": {
-                "precision": 0.9617023172905524,
-                "recall": 0.9381669226830519,
-                "f1-score": 0.9471922980267011,
+                "precision": 0.9328138528138529,
+                "recall": 0.8949923195084487,
+                "f1-score": 0.9101929364576378,
                 "support": 204.0
             },
             "weighted avg": {
-                "precision": 0.9502929380308273,
-                "recall": 0.946078431372549,
-                "f1-score": 0.9457120034632682,
+                "precision": 0.9175218572277396,
+                "recall": 0.9117647058823529,
+                "f1-score": 0.9111844801458417,
                 "support": 204.0
             }
         }
@@ -217,7 +217,8 @@
                 "f1-score": 0.9303334536693669,
                 "support": 204.0
             }
-        }
+        },
+        "roc_auc": 0.998370097077475
     },
     "SVM": {
         "accuracy": 0.9509803921568627,
@@ -327,7 +328,8 @@
                 "f1-score": 0.9505243654289487,
                 "support": 204.0
             }
-        }
+        },
+        "roc_auc": 0.9991615760818107
     },
     "Naive Bayes": {
         "accuracy": 0.8284313725490197,
@@ -437,7 +439,8 @@
                 "f1-score": 0.8344086882762954,
                 "support": 204.0
             }
-        }
+        },
+        "roc_auc": 0.9760820544449837
     },
     "KNN": {
         "accuracy": 0.9656862745098039,
@@ -547,6 +550,7 @@
                 "f1-score": 0.9652678579437166,
                 "support": 204.0
             }
-        }
+        },
+        "roc_auc": 0.9996344056787474
     }
 }
