@@ -81,6 +81,53 @@ def predict():
 def model_comparison():
     return jsonify(model_results)
 
+@app.route('/evaluation_metrics/<model_name>')
+def evaluation_metrics(model_name):
+    from sklearn.metrics import confusion_matrix
+    
+    # Load data
+    df = pd.read_csv('data/disease_symptom_data.csv')
+    X = df.drop('disease', axis=1)
+    y = df['disease']
+    from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    
+    # Load model
+    model = models.get(model_name)
+    if not model:
+        return jsonify({'error': 'Model not found'}), 404
+    
+    # Predict
+    y_pred = model.predict(X_test)
+    
+    # Calculate metrics per class
+    classes = model.classes_ if hasattr(model, 'classes_') else diseases
+    metrics = []
+    
+    for disease in classes:
+        y_test_binary = (y_test == disease).astype(int)
+        y_pred_binary = (y_pred == disease).astype(int)
+        
+        TP = int(np.sum((y_test_binary == 1) & (y_pred_binary == 1)))
+        TN = int(np.sum((y_test_binary == 0) & (y_pred_binary == 0)))
+        FP = int(np.sum((y_test_binary == 0) & (y_pred_binary == 1)))
+        FN = int(np.sum((y_test_binary == 1) & (y_pred_binary == 0)))
+        
+        precision = TP / (TP + FP) if (TP + FP) > 0 else 0
+        recall = TP / (TP + FN) if (TP + FN) > 0 else 0
+        
+        metrics.append({
+            'disease': disease,
+            'TP': TP,
+            'TN': TN,
+            'FP': FP,
+            'FN': FN,
+            'precision': round(precision, 4),
+            'recall': round(recall, 4)
+        })
+    
+    return jsonify(metrics)
+
 @app.route('/history')
 def history():
     return jsonify(prediction_history[-10:])

@@ -255,6 +255,9 @@ async function predictDisease() {
         
         document.getElementById('resultCard').style.display = 'block';
         
+        // Load evaluation metrics
+        loadEvaluationMetrics(selectedModel);
+        
         // Refresh stats and history
         loadStats();
         loadHistory();
@@ -262,5 +265,33 @@ async function predictDisease() {
     } catch (error) {
         console.error('Error predicting disease:', error);
         alert('Error making prediction. Please try again.');
+    }
+}
+
+// Load evaluation metrics
+async function loadEvaluationMetrics(modelName) {
+    try {
+        const response = await fetch(`/evaluation_metrics/${modelName}`);
+        const data = await response.json();
+        
+        const tbody = document.querySelector('#evaluationTable tbody');
+        tbody.innerHTML = '';
+        
+        data.forEach(metric => {
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td><strong>${metric.disease}</strong></td>
+                <td><span class="badge bg-success">${metric.TP}</span></td>
+                <td><span class="badge bg-secondary">${metric.TN}</span></td>
+                <td><span class="badge bg-warning">${metric.FP}</span></td>
+                <td><span class="badge bg-danger">${metric.FN}</span></td>
+                <td>${(metric.precision * 100).toFixed(2)}%</td>
+                <td>${(metric.recall * 100).toFixed(2)}%</td>
+            `;
+        });
+        
+        document.getElementById('evaluationCard').style.display = 'block';
+    } catch (error) {
+        console.error('Error loading evaluation metrics:', error);
     }
 }
