@@ -6,6 +6,7 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.feature_selection import SelectKBest, chi2
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
@@ -18,8 +19,29 @@ df = pd.read_csv('data/disease_symptom_data.csv')
 X = df.drop('disease', axis=1)
 y = df['disease']
 
-# Split data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+print(f"Original features: {X.shape[1]}")
+
+# Feature Selection using Chi-Square Test
+print("\n=== Feature Selection (Chi-Square Test) ===")
+k_features = min(100, X.shape[1])
+selector = SelectKBest(chi2, k=k_features)
+X_selected = selector.fit_transform(X, y)
+selected_features = X.columns[selector.get_support()].tolist()
+print(f"Selected Top {k_features} features")
+
+# Compare: Train with ALL features
+print("\n=== Training with ALL features ===")
+X_train_all, X_test_all, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+model_all = RandomForestClassifier(n_estimators=100, random_state=42)
+model_all.fit(X_train_all, y_train)
+y_pred_all = model_all.predict(X_test_all)
+acc_all = accuracy_score(y_test, y_pred_all)
+print(f"Accuracy with ALL features: {acc_all:.4f}")
+
+# Compare: Train with TOP 100 features
+print(f"\n=== Training with TOP {k_features} features ===")
+X_top100 = X[selected_features]
+X_train, X_test, y_train, y_test = train_test_split(X_top100, y, test_size=0.2, random_state=42, stratify=y)
 
 # Train multiple models
 models = {
@@ -33,7 +55,7 @@ models = {
 results = {}
 trained_models = {}
 
-print("Training models...\n")
+print("\nTraining models with TOP 100 features...\n")
 for name, model in models.items():
     print(f"Training {name}...")
     model.fit(X_train, y_train)
@@ -51,6 +73,12 @@ for name, model in models.items():
     
     print(f"{name} - Accuracy: {accuracy:.4f}, CV Score: {cv_scores.mean():.4f} (+/- {cv_scores.std():.4f})")
 
+# Comparison Results
+print("\n=== COMPARISON RESULTS ===")
+print(f"ALL Features ({X.shape[1]}): Accuracy = {acc_all:.4f}")
+print(f"TOP {k_features} Features: Accuracy = {results['Random Forest']['accuracy']:.4f}")
+print(f"Improvement: {results['Random Forest']['accuracy'] - acc_all:.4f}")
+
 # Save best model (Random Forest)
 best_model = trained_models['Random Forest']
 joblib.dump(best_model, 'models/disease_predictor.pkl')
@@ -65,13 +93,21 @@ with open('models/model_results.json', 'w') as f:
     json.dump(results, f, indent=4)
 
 # Save feature names and disease labels
-feature_names = X.columns.tolist()
+feature_names = selected_features
 disease_labels = y.unique().tolist()
 
 with open('models/metadata.json', 'w') as f:
     json.dump({
         'features': feature_names,
-        'diseases': disease_labels
+        'diseases': disease_labels,
+        'selected_features': selected_features,
+        'feature_selection_method': 'chi2',
+        'comparison': {
+            'all_features': X.shape[1],
+            'selected_features': k_features,
+            'accuracy_all': float(acc_all),
+            'accuracy_selected': float(results['Random Forest']['accuracy'])
+        }
     }, f, indent=4)
 
 # Generate visualizations
@@ -112,5 +148,5 @@ plt.tight_layout()
 plt.savefig('static/confusion_matrix.png', dpi=100, bbox_inches='tight')
 print("Confusion matrix saved to static/confusion_matrix.png")
 
-print("\n✓ All models trained and saved successfully!")
-print(f"✓ Best model accuracy: {results['Random Forest']['accuracy']:.4f}")
+print("\n[SUCCESS] All models trained and saved successfully!")
+print(f"[SUCCESS] Best model accuracy: {results['Random Forest']['accuracy']:.4f}")

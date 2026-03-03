@@ -14,7 +14,7 @@ with open('models/metadata.json', 'r') as f:
 with open('models/model_results.json', 'r') as f:
     model_results = json.load(f)
 
-features = metadata['features']
+features = metadata.get('selected_features', metadata['features'])
 diseases = metadata['diseases']
 
 # Load all models
