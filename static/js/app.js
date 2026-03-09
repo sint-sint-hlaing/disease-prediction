@@ -5,6 +5,20 @@ document.addEventListener('DOMContentLoaded', function() {
     loadModelComparison();
     loadStats();
     loadHistory();
+
+   
+    const modelSelect = document.getElementById('modelSelect');
+
+    modelSelect.addEventListener('change', function() {
+        const selectedModel = this.value; 
+        console.log("Algorithm changed to:", selectedModel);
+        
+      
+        loadEvaluationMetrics(selectedModel);
+    });
+
+    
+    loadEvaluationMetrics(modelSelect.value);
     
     // Symptom search functionality
     document.getElementById('symptomSearch').addEventListener('input', function(e) {
