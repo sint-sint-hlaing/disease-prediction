@@ -162,6 +162,79 @@
                     </div>
                 </div>
 
+                <!-- Classification Report -->
+                <div class="card-modern mt-4" id="diseaseMetricsCard" style="display: none;">
+                    <div class="card-header-modern">
+                        <i class="fas fa-file-medical icon-header"></i>
+                        <h5 class="mb-0">Classification Report - <span id="metricsDiseaseName"></span></h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="section-title">Confusion Matrix</h6>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" rowspan="2"></th>
+                                            <th colspan="2">Predicted</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Positive</th>
+                                            <th>Negative</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th rowspan="2">Actual</th>
+                                            <th>Positive</th>
+                                            <td class="bg-success bg-opacity-25"><strong id="cmTP">0</strong></td>
+                                            <td class="bg-danger bg-opacity-25"><strong id="cmFN">0</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Negative</th>
+                                            <td class="bg-warning bg-opacity-25"><strong id="cmFP">0</strong></td>
+                                            <td class="bg-secondary bg-opacity-25"><strong id="cmTN">0</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-muted small">
+                                    <strong>Total Positive:</strong> <span id="totalPositive">0</span> | 
+                                    <strong>Total Negative:</strong> <span id="totalNegative">0</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="section-title">Performance Metrics</h6>
+                                <table class="table-modern">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Precision</strong></td>
+                                            <td id="metricPrecision">0.00%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Recall</strong></td>
+                                            <td id="metricRecall">0.00%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>F1-Score</strong></td>
+                                            <td id="metricF1">0.00%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Support</strong></td>
+                                            <td id="metricSupport">0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Evaluation Metrics -->
                 <div class="card-modern mt-4" id="evaluationCard" style="display: none;">
                     <div class="card-header-modern">

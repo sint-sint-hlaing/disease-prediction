@@ -81,6 +81,107 @@ def predict():
 def model_comparison():
     return jsonify(model_results)
 
+@app.route('/disease_metrics/<model_name>/<disease_name>')
+def disease_metrics(model_name, disease_name):
+    from sklearn.metrics import confusion_matrix
+    from sklearn.model_selection import train_test_split
+    
+    df = pd.read_csv('data/disease_symptom_data.csv')
+    X = df.drop('disease', axis=1)
+    y = df['disease']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    
+    model = models.get(model_name)
+    if not model:
+        return jsonify({'error': 'Model not found'}), 404
+    
+    y_pred = model.predict(X_test)
+    
+    # Binary classification for the specific disease
+    y_test_binary = (y_test == disease_name).astype(int)
+    y_pred_binary = (y_pred == disease_name).astype(int)
+    
+    TP = int(np.sum((y_test_binary == 1) & (y_pred_binary == 1)))
+    TN = int(np.sum((y_test_binary == 0) & (y_pred_binary == 0)))
+    FP = int(np.sum((y_test_binary == 0) & (y_pred_binary == 1)))
+    FN = int(np.sum((y_test_binary == 1) & (y_pred_binary == 0)))
+    
+    precision = TP / (TP + FP) if (TP + FP) > 0 else 0
+    recall = TP / (TP + FN) if (TP + FN) > 0 else 0
+    f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+    support = TP + FN
+    
+    return jsonify({
+        'disease': disease_name,
+        'confusion_matrix': {
+            'TP': TP,
+            'TN': TN,
+            'FP': FP,
+            'FN': FN,
+            'total_positive': TP + FN,
+            'total_negative': TN + FP
+        },
+        'metrics': {
+            'precision': round(precision, 4),
+            'recall': round(recall, 4),
+            'f1_score': round(f1_score, 4),
+            'support': support
+        }
+    })
+
+@app.route('/classification_report/<model_name>')
+def classification_report(model_name):
+    from sklearn.metrics import classification_report
+    from sklearn.model_selection import train_test_split
+    
+    # Load data
+    df = pd.read_csv('data/disease_symptom_data.csv')
+    X = df.drop('disease', axis=1)
+    y = df['disease']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    
+    # Load model
+    model = models.get(model_name)
+    if not model:
+        return jsonify({'error': 'Model not found'}), 404
+    
+    # Predict
+    y_pred = model.predict(X_test)
+    
+    # Generate classification report
+    report = classification_report(y_test, y_pred, output_dict=True)
+    
+    # Format as table
+    table_data = []
+    for label, metrics in report.items():
+        if label not in ['accuracy', 'macro avg', 'weighted avg']:
+            table_data.append({
+                'disease': label,
+                'precision': round(metrics['precision'], 4),
+                'recall': round(metrics['recall'], 4),
+                'f1_score': round(metrics['f1-score'], 4),
+                'support': int(metrics['support'])
+            })
+    
+    # Add summary rows
+    summary = []
+    for avg_type in ['macro avg', 'weighted avg']:
+        if avg_type in report:
+            summary.append({
+                'disease': avg_type,
+                'precision': round(report[avg_type]['precision'], 4),
+                'recall': round(report[avg_type]['recall'], 4),
+                'f1_score': round(report[avg_type]['f1-score'], 4),
+                'support': int(report[avg_type]['support'])
+            })
+    
+    return jsonify({
+        'model': model_name,
+        'accuracy': round(report['accuracy'], 4),
+        'report': table_data,
+        'summary': summary
+    })
+
 @app.route('/evaluation_metrics/<model_name>')
 def evaluation_metrics(model_name):
     from sklearn.metrics import confusion_matrix

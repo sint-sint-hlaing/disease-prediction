@@ -255,6 +255,9 @@ async function predictDisease() {
         
         document.getElementById('resultCard').style.display = 'block';
         
+        // Load disease metrics
+        loadDiseaseMetrics(selectedModel, data.prediction);
+        
         // Load evaluation metrics
         loadEvaluationMetrics(selectedModel);
         
@@ -265,6 +268,31 @@ async function predictDisease() {
     } catch (error) {
         console.error('Error predicting disease:', error);
         alert('Error making prediction. Please try again.');
+    }
+}
+
+// Load disease metrics
+async function loadDiseaseMetrics(modelName, diseaseName) {
+    try {
+        const response = await fetch(`/disease_metrics/${modelName}/${encodeURIComponent(diseaseName)}`);
+        const data = await response.json();
+        
+        document.getElementById('metricsDiseaseName').textContent = diseaseName;
+        document.getElementById('cmTP').textContent = data.confusion_matrix.TP;
+        document.getElementById('cmTN').textContent = data.confusion_matrix.TN;
+        document.getElementById('cmFP').textContent = data.confusion_matrix.FP;
+        document.getElementById('cmFN').textContent = data.confusion_matrix.FN;
+        document.getElementById('totalPositive').textContent = data.confusion_matrix.total_positive;
+        document.getElementById('totalNegative').textContent = data.confusion_matrix.total_negative;
+        
+        document.getElementById('metricPrecision').textContent = (data.metrics.precision * 100).toFixed(2) + '%';
+        document.getElementById('metricRecall').textContent = (data.metrics.recall * 100).toFixed(2) + '%';
+        document.getElementById('metricF1').textContent = (data.metrics.f1_score * 100).toFixed(2) + '%';
+        document.getElementById('metricSupport').textContent = data.metrics.support;
+        
+        document.getElementById('diseaseMetricsCard').style.display = 'block';
+    } catch (error) {
+        console.error('Error loading disease metrics:', error);
     }
 }
 
@@ -295,3 +323,5 @@ async function loadEvaluationMetrics(modelName) {
         console.error('Error loading evaluation metrics:', error);
     }
 }
+
+
