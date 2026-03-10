@@ -253,13 +253,13 @@ async function predictDisease() {
                 <div class="mb-2">
                     <div class="d-flex justify-content-between mb-2">
                         <span style="font-weight: 600; color: var(--text-dark);">${index + 1}. ${pred.disease}</span>
-                        <span style="font-weight: 600; color: var(--primary);">${(pred.probability * 100).toFixed(1)}%</span>
+                        <span style="font-weight: 600; color: var(--primary);">${(pred.reliability_score * 100).toFixed(1)}%</span>
                     </div>
                     <div class="progress">
                         <div class="progress-bar bg-${colors[index]}" 
                              role="progressbar" 
-                             style="width: ${pred.probability * 100}%">
-                            ${(pred.probability * 100).toFixed(1)}%
+                             style="width: ${pred.reliability_score * 100}%">
+                            ${(pred.reliability_score * 100).toFixed(1)}%
                         </div>
                     </div>
                 </div>

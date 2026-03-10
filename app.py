@@ -43,6 +43,9 @@ def predict():
     feature_vector = [1 if symptom in selected_symptoms else 0 for symptom in features]
     feature_array = np.array(feature_vector).reshape(1, -1)
     
+    # Get evaluation metrics
+    eval_metrics = get_evaluation_metrics(selected_model)
+    
     # Get model
     model = models.get(selected_model, models['random_forest'])
     
@@ -50,32 +53,81 @@ def predict():
     prediction = model.predict(feature_array)[0]
     probabilities = model.predict_proba(feature_array)[0]
     
-    # Get top 3 predictions
-    top_indices = np.argsort(probabilities)[-3:][::-1]
-    top_predictions = [
-        {
-            'disease': model.classes_[idx],
-            'probability': float(probabilities[idx])
-        }
-        for idx in top_indices
-    ]
+    # Calculate reliability scores (probability × precision)
+    reliability_scores = []
+    for idx, disease in enumerate(model.classes_):
+        prob = probabilities[idx]
+        metrics = eval_metrics.get(disease, {'precision': 0.5, 'TP': 0, 'FP': 0})
+        reliability_score = prob * metrics['precision']
+        
+        reliability_scores.append({
+            'disease': disease,
+            'probability': float(prob),
+            'reliability_score': float(reliability_score),
+            'precision': float(metrics['precision']),
+            'TP': metrics['TP'],
+            'FP': metrics['FP']
+        })
+    
+    # Sort by reliability score and get top 3
+    reliability_scores.sort(key=lambda x: x['reliability_score'], reverse=True)
+    top_predictions = reliability_scores[:3]
+    
+    # Print only top 3 calculations with detailed steps
+    print(f"\n=== Top 3 Reliability Score Calculation ({selected_model}) ===")
+    for i, pred in enumerate(top_predictions, 1):
+        tp = pred['TP']
+        fp = pred['FP']
+        precision = pred['precision']
+        prob = pred['probability']
+        rel_score = pred['reliability_score']
+        
+        print(f"{i}. {pred['disease']}:")
+        print(f"   Precision = TP/(TP+FP) = {tp}/({tp}+{fp}) = {tp}/{tp+fp} = {precision:.4f}")
+        print(f"   Reliability Score = Probability × Precision = {prob:.4f} × {precision:.4f} = {rel_score:.4f}")
+        print()
     
     # Save to history
     prediction_entry = {
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'symptoms': selected_symptoms,
-        'prediction': prediction,
-        'confidence': float(max(probabilities)),
+        'prediction': top_predictions[0]['disease'],
+        'confidence': top_predictions[0]['reliability_score'],
         'model': selected_model
     }
     prediction_history.append(prediction_entry)
     
     return jsonify({
-        'prediction': prediction,
-        'confidence': float(max(probabilities)),
+        'prediction': top_predictions[0]['disease'],
+        'confidence': top_predictions[0]['reliability_score'],
         'top_predictions': top_predictions,
         'model_used': selected_model
     })
+
+def get_evaluation_metrics(model_name):
+    """Calculate TP, FP, precision for each disease for specific model"""
+    from sklearn.model_selection import train_test_split
+    
+    df = pd.read_csv('data/disease_symptom_data.csv')
+    X = df.drop('disease', axis=1)
+    y = df['disease']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    
+    model = models.get(model_name)
+    y_pred = model.predict(X_test)
+    
+    eval_metrics = {}
+    for disease in diseases:
+        y_test_binary = (y_test == disease).astype(int)
+        y_pred_binary = (y_pred == disease).astype(int)
+        
+        tp = int(np.sum((y_test_binary == 1) & (y_pred_binary == 1)))
+        fp = int(np.sum((y_test_binary == 0) & (y_pred_binary == 1)))
+        
+        precision = tp / (tp + fp) if (tp + fp) > 0 else 0.5
+        eval_metrics[disease] = {'TP': tp, 'FP': fp, 'precision': precision}
+    
+    return eval_metrics
 
 @app.route('/model_comparison')
 def model_comparison():
